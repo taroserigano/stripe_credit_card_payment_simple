@@ -20,19 +20,19 @@ const storeItems = new Map([
 app.post("/create-checkout-session", async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
+      payment_method_types: ["card"],  //almost always this is "card"
+      mode: "payment",  
       line_items: req.body.items.map(item => {
         const storeItem = storeItems.get(item.id)
         return {
           price_data: {
-            currency: "usd",
-            product_data: {
+            currency: "usd",  // set currency 
+            product_data: { // which product? 
               name: storeItem.name,
             },
-            unit_amount: storeItem.priceInCents,
+            unit_amount: storeItem.priceInCents, // how much? 
           },
-          quantity: item.quantity,
+          quantity: item.quantity, // how many? 
         }
       }),
       success_url: `${process.env.CLIENT_URL}/success.html`,
