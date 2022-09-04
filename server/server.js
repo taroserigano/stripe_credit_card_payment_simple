@@ -19,6 +19,9 @@ const storeItems = new Map([
 
 app.post("/create-checkout-session", async (req, res) => {
   try {
+    
+    // send stripe URL with: payment_method_types, mode, line_items, success_url, cancel_url 
+                            
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],  //almost always this is "card"
       mode: "payment",  
